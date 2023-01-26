@@ -1,27 +1,36 @@
+
+SELECT * FROM northwind.products;
 -- ------------------------------------------------------------------
 -- 0). First, How Many Rows are in the Products Table?
 -- ------------------------------------------------------------------
-
-
+SELECT COUNT(*) AS Num_Rows FROM northwind.products;
 -- ------------------------------------------------------------------
 -- 1). Product Name and Unit/Quantity
 -- ------------------------------------------------------------------
-
-
+SELECT product_name, quantity_per_unit FROM northwind.products;
 -- ------------------------------------------------------------------
 -- 2). Product ID and Name of Current Products
 -- ------------------------------------------------------------------
-
-
+SELECT id AS p_ID,
+ product_name AS p_name, 
+ discontinued as p_current
+ FROM northwind.products
+ WHERE discontinued!=1;
 -- ------------------------------------------------------------------
 -- 3). Product ID and Name of Discontinued Products
 -- ------------------------------------------------------------------
-
-
+SELECT id AS p_id,
+discontinued as p_disc 
+FROM northwind.products 
+WHERE discontinued=1;
 -- ------------------------------------------------------------------
 -- 4). Name & List Price of Most & Least Expensive Products
 -- ------------------------------------------------------------------
-
+SELECT product_name AS p_id
+,list_price AS p_price
+FROM northwind.products
+WHERE list_price = (SELECT MAX(list_price) FROM northwind.products)
+OR list_price = (SELECT MIN(list_price) FROM northwind.products);
 
 -- ------------------------------------------------------------------
 -- 5). Product ID, Name & List Price Costing Less Than $20
