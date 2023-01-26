@@ -35,6 +35,12 @@ OR list_price = (SELECT MIN(list_price) FROM northwind.products);
 -- ------------------------------------------------------------------
 -- 5). Product ID, Name & List Price Costing Less Than $20
 -- ------------------------------------------------------------------
+SELECT id AS p_id
+, product_name AS p_name
+, list_price AS p_price
+FROM northwind.products 
+WHERE list_price < 20.00
+ORDER BY list_price DESC;
 
 
 -- ------------------------------------------------------------------
