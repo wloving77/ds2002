@@ -66,14 +66,26 @@ LIMIT 10;
 -- ------------------------------------------------------------------ 
 -- 9). Count of Current and Discontinued Products 
 -- ------------------------------------------------------------------
-SELECT COUNT(discontinued) FROM northwind.products;
+SELECT COUNT(CASE WHEN discontinued = '1' THEN 1
+ELSE NULL
+END) AS p_Discontinued
+,COUNT(CASE WHEN discontinued = '0' THEN 1
+ELSE NULL
+END) AS p_Current
+,COUNT(*) AS p_ALL
+FROM northwind.products;
 -- ------------------------------------------------------------------
 -- 10). Product Name, Units on Order and Units in Stock
 --      Where Quantity In-Stock is Less Than the Quantity On-Order. 
 -- ------------------------------------------------------------------
-SELECT * FROM northwind.products; 
-
-
+SELECT products.id, products.product_name
+,SUM(inventory_transactions.quantity) AS p_Stock
+,SUM(purchase_order_details.quantity) AS p_On_Order
+FROM northwind.products
+LEFT JOIN inventory_transactions ON products.id=inventory_transactions.id
+LEFT JOIN purchase_order_details ON products.id=purchase_order_details.purchase_order_id
+WHERE inventory_transactions.quantity < purchase_order_details.quantity
+Group BY id;
 
 -- ------------------------------------------------------------------
 -- EXTRA CREDIT -----------------------------------------------------
