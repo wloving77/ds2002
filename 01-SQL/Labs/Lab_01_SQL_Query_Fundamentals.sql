@@ -90,20 +90,37 @@ Group BY id;
 -- ------------------------------------------------------------------
 -- EXTRA CREDIT -----------------------------------------------------
 -- ------------------------------------------------------------------
-
-
 -- ------------------------------------------------------------------
 -- 11). Products with Supplier Company & Address Info
 -- ------------------------------------------------------------------
-
-
-
+SELECT products.product_name
+, suppliers.company
+, suppliers.address
+FROM northwind.products
+LEFT JOIN suppliers ON suppliers.id=products.supplier_ids;
 -- ------------------------------------------------------------------
 -- 12). Number of Products per Category With Less Than 5 Units
 -- ------------------------------------------------------------------
-
-
-
+SELECT products.id
+,products.product_name
+,products.category AS category
+,SUM(inventory_transactions.quantity)
+FROM northwind.products
+LEFT JOIN inventory_transactions ON inventory_transactions.id=products.id
+WHERE inventory_transactions.quantity < 5
+GROUP BY id;
 -- ------------------------------------------------------------------
 -- 13). Number of Products per Category Priced Less Than $20.00
 -- ------------------------------------------------------------------
+SELECT products.id
+,products.product_name
+,products.category
+,SUM(inventory_transactions.quantity)
+,products.list_price AS price
+FROM northwind.products
+LEFT JOIN inventory_transactions ON inventory_transactions.id=products.id
+WHERE products.list_price < 20.00
+GROUP BY id;
+
+
+
