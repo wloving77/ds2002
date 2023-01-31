@@ -1,5 +1,3 @@
-
-SELECT * FROM northwind.products;
 -- ------------------------------------------------------------------
 -- 0). First, How Many Rows are in the Products Table?
 -- ------------------------------------------------------------------
@@ -7,7 +5,9 @@ SELECT COUNT(*) AS Num_Rows FROM northwind.products;
 -- ------------------------------------------------------------------
 -- 1). Product Name and Unit/Quantity
 -- ------------------------------------------------------------------
-SELECT product_name, quantity_per_unit FROM northwind.products;
+SELECT product_name
+, quantity_per_unit 
+FROM northwind.products;
 -- ------------------------------------------------------------------
 -- 2). Product ID and Name of Current Products
 -- ------------------------------------------------------------------
@@ -47,7 +47,8 @@ SELECT id AS p_id
 , product_name AS p_name
 , list_price AS p_price 
 FROM northwind.products
-WHERE list_price < 20.00 AND list_price > 15.00;
+WHERE list_price <= 20.00 AND list_price >= 15.00
+ORDER BY list_price DESC;
 -- ------------------------------------------------------------------
 -- 7). Product Name & List Price Costing Above Average List Price
 -- ------------------------------------------------------------------
@@ -78,7 +79,8 @@ FROM northwind.products;
 -- 10). Product Name, Units on Order and Units in Stock
 --      Where Quantity In-Stock is Less Than the Quantity On-Order. 
 -- ------------------------------------------------------------------
-SELECT products.id, products.product_name
+SELECT products.id
+,products.product_name
 ,SUM(inventory_transactions.quantity) AS p_Stock
 ,SUM(purchase_order_details.quantity) AS p_On_Order
 FROM northwind.products
@@ -90,20 +92,34 @@ Group BY id;
 -- ------------------------------------------------------------------
 -- EXTRA CREDIT -----------------------------------------------------
 -- ------------------------------------------------------------------
-
-
 -- ------------------------------------------------------------------
 -- 11). Products with Supplier Company & Address Info
 -- ------------------------------------------------------------------
-
-
-
+SELECT products.product_name
+, suppliers.company
+, suppliers.address
+FROM northwind.products
+LEFT JOIN suppliers ON suppliers.id=products.supplier_ids;
 -- ------------------------------------------------------------------
 -- 12). Number of Products per Category With Less Than 5 Units
 -- ------------------------------------------------------------------
-
-
-
+SELECT products.id
+,products.product_name
+,products.category AS category
+,SUM(inventory_transactions.quantity)
+FROM northwind.products
+LEFT JOIN inventory_transactions ON inventory_transactions.id=products.id
+WHERE inventory_transactions.quantity < 5
+GROUP BY id;
 -- ------------------------------------------------------------------
 -- 13). Number of Products per Category Priced Less Than $20.00
 -- ------------------------------------------------------------------
+SELECT products.id
+,products.product_name
+,products.category
+,SUM(inventory_transactions.quantity)
+,products.list_price AS price
+FROM northwind.products
+LEFT JOIN inventory_transactions ON inventory_transactions.id=products.id
+WHERE products.list_price < 20.00
+GROUP BY id;
