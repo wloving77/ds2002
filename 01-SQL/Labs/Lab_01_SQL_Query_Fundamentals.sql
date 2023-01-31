@@ -123,5 +123,3 @@ FROM northwind.products
 LEFT JOIN inventory_transactions ON inventory_transactions.id=products.id
 WHERE products.list_price < 20.00
 GROUP BY id;
-
-SELECT * FROM order_details;
