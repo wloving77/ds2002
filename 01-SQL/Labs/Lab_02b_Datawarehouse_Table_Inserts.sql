@@ -5,7 +5,7 @@
 -- ----------------------------------------------
 -- Populate dim_customers
 -- ----------------------------------------------
-INSERT INTO `northwind_dw`.`dim_customers`
+INSERT INTO `william's_dw`.`dim_customers`
 (`customer_key`,
 `company`,
 `last_name`,
@@ -35,13 +35,13 @@ FROM northwind.customers;
 -- ----------------------------------------------
 -- Validate that the Data was Inserted ----------
 -- ----------------------------------------------
-SELECT * FROM northwind_dw.dim_customers;
+SELECT * FROM `william's_dw`.dim_customers;
 
 
 -- ----------------------------------------------
 -- Populate dim_employees
 -- ----------------------------------------------
-INSERT INTO `northwind_dw`.`dim_employees`
+INSERT INTO `william's_dw`.`dim_employees`
 (`employee_key`,
 `company`,
 `last_name`,
@@ -77,13 +77,14 @@ FROM `northwind`.`employees`;
 -- ----------------------------------------------
 -- Validate that the Data was Inserted ----------
 -- ----------------------------------------------
-SELECT * FROM northwind_dw.dim_employees;
+SELECT * FROM `william's_dw`.dim_employees;
 
 
+SELECT * FROM northwind.products;
 -- ----------------------------------------------
 -- Populate dim_products
 -- ----------------------------------------------
-INSERT INTO `northwind_dw`.`dim_products`
+INSERT INTO `william's_dw`.`dim_products`
 (`product_key`,
 `product_code`,
 `product_name`,
@@ -95,18 +96,29 @@ INSERT INTO `northwind_dw`.`dim_products`
 `discontinued`,
 `minimum_reorder_quantity`,
 `category`)
+SELECT `id`,
+`product_code`,
+`product_name`,
+`standard_cost`,
+`list_price`,
+`reorder_level`,
+`target_level`,
+`quantity_per_unit`,
+`discontinued`,
+`minimum_reorder_quantity`,
+`category`
+FROM northwind.products;
 # TODO: Write a SELECT Statement to Populate the table;
 
 -- ----------------------------------------------
 -- Validate that the Data was Inserted ----------
 -- ----------------------------------------------
-SELECT * FROM northwind_dw.dim_products;
-
+SELECT * FROM `william's_dw`.dim_products;
 
 -- ----------------------------------------------
 -- Populate dim_shippers
 -- ----------------------------------------------
-INSERT INTO `northwind_dw`.`dim_shippers`
+INSERT INTO `william's_dw`.`dim_shippers`
 (`shipper_key`,
 `company`,
 `address`,
@@ -114,15 +126,21 @@ INSERT INTO `northwind_dw`.`dim_shippers`
 `state_province`,
 `zip_postal_code`,
 `country_region`)
+SELECT
+`id`,
+`company`,
+`address`,
+`city`,
+`state_province`,
+`zip_postal_code`,
+`country_region`
+FROM northwind.shippers;
 # TODO: Write a SELECT Statement to Populate the table;
 
 -- ----------------------------------------------
 -- Validate that the Data was Inserted ----------
 -- ----------------------------------------------
-SELECT * FROM northwind_dw.dim_shippers;
-
-
-
+SELECT * FROM `william's_dw`.dim_shippers;
 -- ----------------------------------------------
 -- Populate fact_orders
 -- ----------------------------------------------
@@ -166,4 +184,4 @@ TODO: Write a SELECT Statement that:
 -- ----------------------------------------------
 -- Validate that the Data was Inserted ----------
 -- ----------------------------------------------
-SELECT * FROM northwind_dw.fact_orders;
+SELECT * FROM `william's_dw`.fact_orders;

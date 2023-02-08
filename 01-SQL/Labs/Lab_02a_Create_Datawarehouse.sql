@@ -1,5 +1,5 @@
 #DROP database `william's_DW`;
-#CREATE DATABASE `william's_DW` /*!40100 DEFAULT CHARACTER SET latin1 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE `william's_DW` /*!40100 DEFAULT CHARACTER SET latin1 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 
 USE `william's_dw`;
 
