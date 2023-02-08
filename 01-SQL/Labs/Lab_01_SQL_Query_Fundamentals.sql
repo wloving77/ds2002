@@ -79,6 +79,10 @@ FROM northwind.products;
 -- 10). Product Name, Units on Order and Units in Stock
 --      Where Quantity In-Stock is Less Than the Quantity On-Order. 
 -- ------------------------------------------------------------------
+
+-- My original query:
+-- I understand this one is probably wrong, keeping it so I can reference it for the syntax of joins and SUM's
+
 SELECT products.id
 ,products.product_name
 ,SUM(inventory_transactions.quantity) AS p_Stock
@@ -89,6 +93,14 @@ LEFT JOIN purchase_order_details ON products.id=purchase_order_details.purchase_
 WHERE inventory_transactions.quantity < purchase_order_details.quantity
 Group BY id;
 
+-- Correct query from Class: 
+
+SELECT product_name
+, reorder_level AS p_stock
+, target_level AS p_onOrder
+FROM northwind.products
+WHERE reorder_level < target_level;
+
 -- ------------------------------------------------------------------
 -- EXTRA CREDIT -----------------------------------------------------
 -- ------------------------------------------------------------------
@@ -96,10 +108,18 @@ Group BY id;
 -- 11). Products with Supplier Company & Address Info
 -- ------------------------------------------------------------------
 SELECT products.product_name
+, products.supplier_ids
+, suppliers.id
 , suppliers.company
 , suppliers.address
+, products.category
+, products.list_price
+, products.target_level
+, suppliers.city
+, suppliers.zip_postal_code
+, suppliers.state_province
 FROM northwind.products
-LEFT JOIN suppliers ON suppliers.id=products.supplier_ids;
+INNER JOIN suppliers ON suppliers.id=products.supplier_ids;
 -- ------------------------------------------------------------------
 -- 12). Number of Products per Category With Less Than 5 Units
 -- ------------------------------------------------------------------
@@ -108,7 +128,6 @@ SELECT products.id
 ,products.category AS category
 ,SUM(inventory_transactions.quantity)
 FROM northwind.products
-LEFT JOIN inventory_transactions ON inventory_transactions.id=products.id
 WHERE inventory_transactions.quantity < 5
 GROUP BY id;
 -- ------------------------------------------------------------------
