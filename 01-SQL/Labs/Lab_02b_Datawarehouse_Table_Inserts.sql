@@ -35,7 +35,7 @@ FROM northwind.customers;
 -- ----------------------------------------------
 -- Validate that the Data was Inserted ----------
 -- ----------------------------------------------
-SELECT * FROM northwind_dw.dim_customers;
+SELECT * FROM `northwind_dw`.dim_customers;
 
 
 -- ----------------------------------------------
@@ -77,13 +77,14 @@ FROM `northwind`.`employees`;
 -- ----------------------------------------------
 -- Validate that the Data was Inserted ----------
 -- ----------------------------------------------
-SELECT * FROM northwind_dw.dim_employees;
+SELECT * FROM `northwind_dw`.dim_employees;
 
 
+SELECT * FROM northwind.products;
 -- ----------------------------------------------
 -- Populate dim_products
 -- ----------------------------------------------
-INSERT INTO `northwind_dw`.`dim_products`
+INSERT INTO `northwind`.`dim_products`
 (`product_key`,
 `product_code`,
 `product_name`,
@@ -95,13 +96,24 @@ INSERT INTO `northwind_dw`.`dim_products`
 `discontinued`,
 `minimum_reorder_quantity`,
 `category`)
+SELECT `id`,
+`product_code`,
+`product_name`,
+`standard_cost`,
+`list_price`,
+`reorder_level`,
+`target_level`,
+`quantity_per_unit`,
+`discontinued`,
+`minimum_reorder_quantity`,
+`category`
+FROM northwind.products;
 # TODO: Write a SELECT Statement to Populate the table;
 
 -- ----------------------------------------------
 -- Validate that the Data was Inserted ----------
 -- ----------------------------------------------
-SELECT * FROM northwind_dw.dim_products;
-
+SELECT * FROM `northwind_dw`.dim_products;
 
 -- ----------------------------------------------
 -- Populate dim_shippers
@@ -114,42 +126,88 @@ INSERT INTO `northwind_dw`.`dim_shippers`
 `state_province`,
 `zip_postal_code`,
 `country_region`)
+SELECT
+`id`,
+`company`,
+`address`,
+`city`,
+`state_province`,
+`zip_postal_code`,
+`country_region`
+FROM northwind.shippers;
 # TODO: Write a SELECT Statement to Populate the table;
 
 -- ----------------------------------------------
 -- Validate that the Data was Inserted ----------
 -- ----------------------------------------------
-SELECT * FROM northwind_dw.dim_shippers;
-
-
-
+SELECT * FROM `northwind_dw`.dim_shippers;
 -- ----------------------------------------------
 -- Populate fact_orders
 -- ----------------------------------------------
 INSERT INTO `northwind_dw`.`fact_orders`
-(`order_key`,
-`employee_key`,
-`customer_key`,
-`product_key`,
-`shipper_key`,
-`ship_name`,
-`ship_address`,
-`ship_city`,
-`ship_state_province`,
-`ship_zip_postal_code`,
-`ship_country_region`,
-`quantity`,
-`order_date`,
-`shipped_date`,
-`unit_price`,
-`discount`,
-`shipping_fee`,
-`taxes`,
-`payment_type`,
-`paid_date`,
-`tax_rate`,
-`order_status`,
-`order_details_status`)
+( `order_key`,
+  `order_status_id`,
+  `order_details_id`,
+  `product_id` ,
+  `inventory_id` ,
+  `purchase_order_id` ,
+  `shipper_id` ,
+  `tax_status_id`,
+  `order_status_name`,
+  `order_details_status_name`,
+  `quantity` ,
+  `unit_price` ,
+  `discount` ,
+  `date_allocated`,
+  `order_date`,
+  `shipped_date`,
+  `ship_name`,
+  `ship_address`,
+  `ship_city`,
+  `ship_state_province`,
+  `ship_zip_postal_code`,
+  `ship_country_region`,
+  `shipping_fee` ,
+  `taxes`,
+  `payment_type`,
+  `paid_date`,
+  `tax_rate` )
+SELECT 
+  o.`id`,
+  os.`id`,
+  od.`status_id`,
+  od.`product_id` ,
+  od.`inventory_id` ,
+  od.`purchase_order_id` ,
+  o.`shipper_id` ,
+  o.`tax_status_id`,
+  os.`status_name`,
+  ods.`status_name`,
+  od.`quantity` ,
+  od.`unit_price` ,
+  od.`discount` ,
+  od.`date_allocated`,
+  o.`order_date`,
+  o.`shipped_date`,
+  o.`ship_name`,
+  o.`ship_address`,
+  o.`ship_city`,
+  o.`ship_state_province`,
+  o.`ship_zip_postal_code`,
+  o.`ship_country_region`,
+  o.`shipping_fee` ,
+  o.`taxes`,
+  o.`payment_type`,
+  o.`paid_date`,
+  o.`tax_rate`
+  FROM northwind.orders AS o
+  LEFT JOIN northwind.orders_status AS os
+  ON o.status_id=os.id
+  LEFT JOIN northwind.order_details as od
+  ON o.id=od.order_id
+  LEFT JOIN northwind.order_details_status as ods
+  ON od.status_id=ods.id;
+  
 /* 
 --------------------------------------------------------------------------------------------------
 TODO: Write a SELECT Statement that:
@@ -166,4 +224,4 @@ TODO: Write a SELECT Statement that:
 -- ----------------------------------------------
 -- Validate that the Data was Inserted ----------
 -- ----------------------------------------------
-SELECT * FROM northwind_dw.fact_orders;
+SELECT * FROM `northwind_dw`.fact_orders;
