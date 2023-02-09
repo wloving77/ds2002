@@ -108,22 +108,23 @@ CREATE TABLE `dim_suppliers` (
 --       orders_status tables to create a new Fact Table in Northwind_DW.
 -- To keep things simple, don't include purchase order or inventory info
 -- ----------------------------------------------------------------------
-#DROP TABLE `fact_orders`;
+DROP TABLE `fact_orders`;
 CREATE TABLE `fact_orders` (
   `fact_order_key` int NOT NULL AUTO_INCREMENT,
-  `order_key` int NOT NULL,
-  `order_status_id` int NOT NULL,
-  `order_details_id` int NOT NULL,
+  `order_key` int,
+  `order_status_id` int ,
+  `order_details_id` int ,
+  `order_details_status_id` int,
   `product_id` int DEFAULT NULL,
   `inventory_id` int DEFAULT NULL,
   `purchase_order_id` int DEFAULT NULL,
   `shipper_id` int DEFAULT NULL,
   `tax_status_id` tinyint DEFAULT NULL,
-  `order_status_name` varchar(50) NOT NULL,
-  `order_details_status_name` varchar(50) NOT NULL,
-  `quantity` decimal(18,4) NOT NULL DEFAULT '0.0000',
+  `order_status_name` varchar(50) ,
+  `order_details_status_name` varchar(50) ,
+  `quantity` decimal(18,4) DEFAULT '0.0000',
   `unit_price` decimal(19,4) DEFAULT '0.0000',
-  `discount` double NOT NULL DEFAULT '0',
+  `discount` double DEFAULT '0',
   `date_allocated` datetime DEFAULT NULL,
   `order_date` datetime DEFAULT NULL,
   `shipped_date` datetime DEFAULT NULL,
@@ -149,3 +150,6 @@ CREATE TABLE `fact_orders` (
   KEY `shipper_id` (`shipper_id`),
   KEY `tax_status_id` (`tax_status_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4;
+
+
+SELECT * FROM `william's_dw`.fact_orders 
