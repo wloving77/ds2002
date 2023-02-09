@@ -1,7 +1,7 @@
-#DROP database `william's_DW`;
-CREATE DATABASE `william's_DW` /*!40100 DEFAULT CHARACTER SET latin1 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+DROP database `northwind_dw`;
+CREATE DATABASE northwind_dw /*!40100 DEFAULT CHARACTER SET latin1 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 
-USE `william's_dw`;
+USE `northwind_dw`;
 
 #DROP TABLE `dim_customers`;
 CREATE TABLE `dim_customers` (
@@ -114,7 +114,6 @@ CREATE TABLE `fact_orders` (
   `order_key` int,
   `order_status_id` int ,
   `order_details_id` int ,
-  `order_details_status_id` int,
   `product_id` int DEFAULT NULL,
   `inventory_id` int DEFAULT NULL,
   `purchase_order_id` int DEFAULT NULL,
@@ -152,4 +151,4 @@ CREATE TABLE `fact_orders` (
 ) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4;
 
 
-SELECT * FROM `william's_dw`.fact_orders 
+SELECT * FROM `northwind_dw`.fact_orders 
