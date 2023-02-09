@@ -1,3 +1,6 @@
+
+-- Creates the empty tables for northwind_dw with a final fact_orders table for lab 2a
+
 DROP database `northwind_dw`;
 CREATE DATABASE northwind_dw /*!40100 DEFAULT CHARACTER SET latin1 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 
