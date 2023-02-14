@@ -1,7 +1,8 @@
+
+-- Populates the tables from 2a with data from the original northwind database. 
 -- --------------------------------------------------------------------------------------------------------------
 -- TODO: Extract the appropriate data from the northwind database, and INSERT it into the Northwind_DW database.
--- --------------------------------------------------------------------------------------------------------------
-
+-- -----------------------------------------------------------------------------------------------------------
 -- ----------------------------------------------
 -- Populate dim_customers
 -- ----------------------------------------------
@@ -152,13 +153,11 @@ INSERT INTO `northwind_dw`.`fact_orders`
   `inventory_id` ,
   `purchase_order_id` ,
   `shipper_id` ,
-  `tax_status_id`,
   `order_status_name`,
   `order_details_status_name`,
   `quantity` ,
   `unit_price` ,
   `discount` ,
-  `date_allocated`,
   `order_date`,
   `shipped_date`,
   `ship_name`,
@@ -180,13 +179,11 @@ SELECT
   od.`inventory_id` ,
   od.`purchase_order_id` ,
   o.`shipper_id` ,
-  o.`tax_status_id`,
   os.`status_name`,
   ods.`status_name`,
   od.`quantity` ,
   od.`unit_price` ,
   od.`discount` ,
-  od.`date_allocated`,
   o.`order_date`,
   o.`shipped_date`,
   o.`ship_name`,
@@ -220,6 +217,8 @@ TODO: Write a SELECT Statement that:
 - columns you're required to extract from each of the four tables. Pay close attention!
 --------------------------------------------------------------------------------------------------
 */
+
+
 
 -- ----------------------------------------------
 -- Validate that the Data was Inserted ----------
